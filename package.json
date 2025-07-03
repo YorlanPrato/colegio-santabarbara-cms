@@ -1,0 +1,14 @@
+{
+  "name": "c-users-user-downloads-tareas-servicio-comunitario-paginas-v3",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.11.0"
+  }
+}
