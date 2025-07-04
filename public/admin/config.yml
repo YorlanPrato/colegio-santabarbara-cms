@@ -1,0 +1,74 @@
+backend:
+  name: github
+  repo: YorlanPrato/colegio-santabarbara-cms 
+  branch: main # O master, si esa es tu rama principal
+  base_url: https://api.github.com
+  auth_proxy_url: https://tupagina.netlify.app/.netlify/identity # Esto se configurará en Netlify
+
+media_folder: "public/uploads" # Dónde se guardarán las imágenes subidas por el CMS
+public_folder: "/uploads" # Ruta pública para acceder a las imágenes desde el sitio
+
+collections:
+  - name: "pages"
+    label: "Páginas Estáticas"
+    files:
+      - label: "Descripción de la Institución"
+        name: "institucion"
+        file: "src/content/institucion/index.md"
+        fields:
+          - {label: "Título", name: "title", widget: "string"}
+          - {label: "Párrafo 1", name: "description_p1", widget: "markdown"}
+          - {label: "Párrafo 2", name: "description_p2", widget: "markdown"}
+          - {label: "Párrafo 3", name: "description_p3", widget: "markdown"}
+      - label: "Reseña Histórica"
+        name: "historia"
+        file: "src/content/historia/index.md"
+        fields:
+          - {label: "Título", name: "title", widget: "string"}
+          - {label: "Párrafo 1", name: "paragraph1", widget: "markdown"}
+          - {label: "Párrafo 2", name: "paragraph2", widget: "markdown"}
+          - {label: "Párrafo 3", name: "paragraph3", widget: "markdown"}
+          - {label: "Imagen", name: "image", widget: "image", required: false}
+      - label: "Información de Contacto"
+        name: "contacto_info"
+        file: "src/content/contacto_info/index.md"
+        fields:
+          - {label: "Título", name: "title", widget: "string"}
+          - {label: "Teléfono", name: "phone", widget: "string"}
+          - {label: "Dirección", name: "address", widget: "string"}
+          - {label: "URL Instagram", name: "instagram_url", widget: "string"}
+          - {label: "Usuario Instagram", name: "instagram_handle", widget: "string"}
+          - {label: "URL Embed Mapa", name: "map_embed_url", widget: "string"}
+
+  - name: "news"
+    label: "Noticias del Carrusel"
+    folder: "src/content/noticias"
+    create: true # Permite crear nuevas noticias
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Formato de nombre de archivo
+    fields:
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Resumen", name: "summary", widget: "text"}
+      - {label: "Imagen", name: "image", widget: "image", required: false}
+      - {label: "Fecha", name: "date", widget: "datetime"}
+      - {label: "Contenido Completo", name: "body", widget: "markdown"}
+
+  - name: "special_dates"
+    label: "Fechas Especiales (Calendario)"
+    folder: "src/content/fechas_especiales"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Nombre del Evento", name: "name", widget: "string"}
+      - {label: "Mes (0-11)", name: "month", widget: "number", min: 0, max: 11}
+      - {label: "Día (1-31)", name: "day", widget: "number", min: 1, max: 31}
+
+  - name: "academic_offers"
+    label: "Oferta Académica"
+    folder: "src/content/ofertas_academicas"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Resumen", name: "summary", widget: "text"}
+      - {label: "Descripción Completa", name: "description", widget: "markdown"}
+      - {label: "Clase de Color (ej. pastel-yellow)", name: "color_class", widget: "string", required: false}

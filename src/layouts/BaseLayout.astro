@@ -1,0 +1,80 @@
+---
+// src/layouts/BaseLayout.astro
+// Importa tu archivo CSS global.
+import '../styles/style.css';
+
+// Define las propiedades (props) que este layout puede recibir.
+// 'title' es para el título de la página en la pestaña del navegador.
+// 'holidays' es un array opcional de objetos para las fechas especiales del calendario.
+interface Props {
+  title: string;
+  holidays?: Array<{ name: string; month: number; day: number }>;
+}
+
+// Desestructura las props recibidas.
+const { title, holidays } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- El título de la página se establece dinámicamente desde las props -->
+    <title>{title}</title>
+    <!-- Enlaza tu archivo CSS global. La ruta es relativa a la raíz del proyecto. -->
+    <link rel="stylesheet" href="/src/styles/style.css">
+    <!-- Enlaza la librería de Font Awesome para los íconos. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!--
+        Si se proporcionan datos de 'holidays' (fechas especiales),
+        se inyectan en una variable global 'window.holidaysData'
+        para que tu script.js pueda acceder a ellos.
+        Esto debe ir antes de cargar script.js.
+    -->
+    {holidays && (
+        <script define:vars={{ holidays }}>
+            window.holidaysData = holidays;
+        </script>
+    )}
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <!-- Ruta de la imagen del logo. Asume que la imagen está en public/assets/ -->
+                <img src="/public/assets/banner1.png" alt="Logo Institución">
+            </div>
+            <!-- El menú de navegación se ocultará completamente en móvil via CSS -->
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#inicio" class="scroll-link active">INICIO</a></li>
+                    <li><a href="#calendario" class="scroll-link">CALENDARIO</a></li>
+                    <li><a href="#oferta" class="scroll-link">OFERTA ACADÉMICA</a></li>
+                    <li><a href="#historia" class="scroll-link">HISTORIA</a></li>
+                    <li><a href="#contacto" class="scroll-link">CONTÁCTANOS</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!--
+            El <slot /> es el marcador de posición donde se inyectará el contenido
+            específico de cada página que utilice este layout.
+            Por ejemplo, todo el contenido de las secciones de tu index.astro irá aquí.
+        -->
+        <slot />
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>© 2025 U.E. Colegio Santa Bárbara. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Carga tu archivo JavaScript. La ruta es relativa a la raíz del proyecto. -->
+    <script src="/src/scripts/script.js"></script>
+</body>
+</html>
