@@ -1,6 +1,6 @@
-import { defineConfig, defineCollection } from 'astro/config'; // 'z' se elimina de aquí
+import { defineConfig } from 'astro/config'; // 'defineCollection' se elimina de aquí
 import netlify from '@astrojs/netlify/functions';
-import { z } from 'zod'; // 'z' se importa directamente desde 'zod'
+import { defineCollection, z } from 'astro:content'; // 'defineCollection' y 'z' se importan desde 'astro:content'
 
 // Define tus colecciones de contenido aquí
 const institucionCollection = defineCollection({
